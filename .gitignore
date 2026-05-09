@@ -3,9 +3,22 @@ docs
 dist
 
 .env
-output_data
-input_schemas/
+.env.local
+.env.*.local
+*.pem
+
+/server/output_data/*
+!/server/output_data/.gitkeep
+
+files
+/server/input_schemas/*
+!/server/input_schemas/.gitkeep
 
 test.js
 
-files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+npm-debug.log*
