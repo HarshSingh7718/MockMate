@@ -149,7 +149,7 @@ const Output = () => {
   };
 
   useEffect(() => {
-    const sse = new EventSource('http://localhost:4000/api/stream');
+    const sse = new EventSource(`${import.meta.env.VITE_API_BASE_URL}/api/stream`);
 
     sse.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -172,13 +172,13 @@ const Output = () => {
     setLogs((prev) => [...prev, "🔄 Initializing generation pipeline..."]);
 
     try {
-      const inputRes = await fetch('http://localhost:4000/api/files?type=input');
+      const inputRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/files?type=input`);
       const inputData = await inputRes.json();
       setInputFiles(inputData.files.map((f, i) => ({
         id: `in${i}`, name: f.filename, type: 'js', content: f.content
       })));
 
-      const buildRes = await fetch('http://localhost:4000/api/build-mock', {
+      const buildRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/build-mock`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ count: Number(mockRows) || 10 })
@@ -186,7 +186,7 @@ const Output = () => {
 
       if (!buildRes.ok) throw new Error("Pipeline Failed. The AI might have timed out.");
 
-      const outRes = await fetch('http://localhost:4000/api/files?type=output');
+      const outRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/files?type=output`);
       const outData = await outRes.json();
       const formattedOutputs = outData.files.map((f, i) => ({
         id: `out${i}`, name: f.filename, type: 'json', content: f.content
@@ -204,7 +204,7 @@ const Output = () => {
       }
 
       if (useMongo && mongoUri) {
-        await fetch('http://localhost:4000/api/seed-db', {
+        await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/seed-db`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ mongoUri })
@@ -242,7 +242,7 @@ const Output = () => {
     }
   };
 
-  const handleDownloadZip = () => window.open('http://localhost:4000/api/download', '_blank');
+  const handleDownloadZip = () => window.open(`${import.meta.env.VITE_API_BASE_URL}/api/download`, '_blank');
   const toggleTerminal = () => { setIsTerminalExpanded(!isTerminalExpanded); if (!isTerminalExpanded) setIsEditorExpanded(false); };
   const toggleEditor = () => { setIsEditorExpanded(!isEditorExpanded); if (!isEditorExpanded) setIsTerminalExpanded(false); };
 
