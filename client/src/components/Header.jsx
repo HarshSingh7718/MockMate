@@ -24,8 +24,8 @@ const Header = ({ isDarkMode, toggleDarkMode }) => {
   return (
     <nav className="glassmorphism fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center border-b border-white/5 transition-colors duration-300">
       <Link to="/" className="flex items-center gap-2">
-        <div className="bg-brand-500 p-1.5 rounded-lg">
-          <Database className="w-6 h-6 text-white" />
+        <div className="p-1.5 rounded-lg">
+          <img src='/MockMate-logo.svg' className="w-10 h-10" />
         </div>
         <span className="text-xl font-bold tracking-tight">MockMate</span>
       </Link>
